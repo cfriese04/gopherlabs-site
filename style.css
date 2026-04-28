@@ -41,10 +41,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Single subtle wash of warmth in the upper area only.
+     No bottom-positioned gradient (it bled into the footer and made
+     it look like a tinted band). The footer now sits on flat parchment. */
   background-image:
-    radial-gradient(at 14% -4%,  rgba( 90,   0, 17, 0.10) 0%, transparent 42%),
-    radial-gradient(at 92% 104%, rgba(214, 165, 42, 0.13) 0%, transparent 48%),
-    radial-gradient(at 50%  50%, rgba( 46,   0, 10, 0.02) 0%, transparent 60%);
+    radial-gradient(at 14% -4%, rgba(90, 0, 17, 0.08) 0%, transparent 50%),
+    radial-gradient(at 86% 8%, rgba(214, 165, 42, 0.07) 0%, transparent 45%);
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   min-height: 100vh;          /* fallback for older mobile browsers */
@@ -60,9 +63,13 @@ body {
    Typed headline → italic kicker
    ============================================================ */
 .headline {
-  position: fixed;
+  /* Absolute (not fixed): morphs at viewport center on first paint
+     because scroll = 0, then once placed, scrolls naturally with the
+     document like normal flow. Fixes the glued-to-viewport bug while
+     preserving a single-element morph for fluidity. */
+  position: absolute;
   left: 50%;
-  top: 50%;
+  top: 50vh;
   transform: translate(-50%, -50%);
   font-family: var(--display);
   font-weight: 450;
@@ -77,11 +84,22 @@ body {
   padding: 0 24px;
   z-index: 20;
   pointer-events: none;
-  transition: opacity 700ms ease;
+  transition:
+    top 950ms var(--ease),
+    transform 950ms var(--ease),
+    font-size 950ms var(--ease),
+    letter-spacing 950ms var(--ease),
+    color 950ms ease;
 }
 
-.headline--hidden {
-  opacity: 0;
+.headline--placed {
+  top: clamp(236px, 34vh, 348px);
+  transform: translate(-50%, 0);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--maroon);
 }
 
 .headline__text { display: inline; }
@@ -144,25 +162,6 @@ body {
   margin-left: 0.08em;
   /* Gold flourish under the italic word would be too much — color shift is enough */
   color: var(--maroon);
-}
-
-/* Kicker — italic subtitle that lives in normal flow under the brand.
-   Fades in at the same beat that the centered typing element fades out. */
-.hero__kicker {
-  font-family: var(--display);
-  font-style: italic;
-  font-weight: 500;
-  font-optical-sizing: auto;
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  letter-spacing: 0;
-  color: var(--maroon);
-  margin: clamp(16px, 2vh, 24px) 0 0;
-  opacity: 0;
-  transition: opacity 900ms ease 200ms;
-}
-
-.hero__kicker--visible {
-  opacity: 1;
 }
 
 /* ============================================================
@@ -424,10 +423,9 @@ a.card:focus-visible {
     line-height: 1.15;
   }
 
-  .hero__kicker {
+  .headline--placed {
+    top: clamp(180px, 28dvh, 250px);
     font-size: clamp(0.9rem, 3.4vw, 1rem);
-    margin-top: 14px;
-    padding: 0 24px;
   }
 
   .hero {
@@ -499,7 +497,8 @@ a.card:focus-visible {
     font-size: 1.35rem;
   }
 
-  .hero__kicker {
+  .headline--placed {
+    top: clamp(160px, 24dvh, 220px);
     font-size: 0.95rem;
   }
 }

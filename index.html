@@ -28,7 +28,6 @@
       <span class="brand__word">Gopher</span>
       <span class="brand__word brand__word--italic">Labs</span>
     </h1>
-    <p class="hero__kicker" id="kicker" aria-hidden="true">solving problems with technology.</p>
   </section>
 
   <main class="content" id="content">
@@ -96,7 +95,6 @@
       const cursor = document.getElementById('cursor');
       const headline = document.getElementById('headline');
       const brand = document.getElementById('brand');
-      const kicker = document.getElementById('kicker');
       const cards = document.getElementById('cards');
       const footer = document.getElementById('footer');
 
@@ -105,9 +103,8 @@
       if (reduce) {
         target.textContent = text;
         cursor.style.display = 'none';
-        headline.classList.add('headline--hidden');
+        headline.classList.add('headline--placed');
         brand.classList.add('brand--visible');
-        kicker.classList.add('hero__kicker--visible');
         cards.classList.add('cards--visible');
         footer.classList.add('footer--visible');
         return;
@@ -132,9 +129,8 @@
 
       function transitionToBrand() {
         cursor.classList.add('headline__cursor--hide');
-        headline.classList.add('headline--hidden');
+        headline.classList.add('headline--placed');
         brand.classList.add('brand--visible');
-        kicker.classList.add('hero__kicker--visible');
         setTimeout(() => {
           cards.classList.add('cards--visible');
           footer.classList.add('footer--visible');
