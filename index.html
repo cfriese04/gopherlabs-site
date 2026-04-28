@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Gopher Labs</title>
+  <meta name="description" content="Gopher Labs LLC — solving problems with technology." />
+  <meta name="theme-color" content="#F1E8D0" />
+
+  <link rel="icon" type="image/png" href="GopherLabs.png" />
+  <link rel="apple-touch-icon" href="GopherLabs.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Schibsted+Grotesk:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2 class="headline" id="headline" aria-label="solving problems with technology">
+    <span class="headline__text" id="typingText" aria-hidden="true"></span><span class="headline__cursor" id="cursor" aria-hidden="true"></span>
+  </h2>
+
+  <section class="hero">
+    <h1 class="brand" id="brand">
+      <span class="brand__word">Gopher</span>
+      <span class="brand__word brand__word--italic">Labs</span>
+    </h1>
+  </section>
+
+  <main class="content" id="content">
+    <section class="cards" id="cards" aria-label="Projects">
+
+      <a class="card card--featured" href="https://getappstinence.com" target="_blank" rel="noopener">
+        <header class="card__meta">
+          <span class="card__index">I</span>
+          <span class="card__status"><span class="card__dot" aria-hidden="true"></span>Live</span>
+        </header>
+        <div class="card__body">
+          <h3 class="card__title">Appstinence</h3>
+          <p class="card__desc">An iOS app that pauses you before you scroll. Editorial interventions that turn screen time into a conscious choice &mdash; not a reflex.</p>
+        </div>
+        <footer class="card__foot">
+          <span class="card__platform">iOS &middot; 2026</span>
+          <span class="card__cta">Visit getappstinence.com &nbsp;&rarr;</span>
+        </footer>
+      </a>
+
+      <article class="card card--placeholder">
+        <header class="card__meta">
+          <span class="card__index">II</span>
+          <span class="card__status card__status--muted">Underway</span>
+        </header>
+        <div class="card__body">
+          <h3 class="card__title card__title--muted">Untitled</h3>
+          <p class="card__desc card__desc--muted">A quieter project, still in early shape.</p>
+        </div>
+        <footer class="card__foot card__foot--muted">
+          <span class="card__platform">&mdash;</span>
+          <span class="card__cta">Soon</span>
+        </footer>
+      </article>
+
+      <article class="card card--placeholder">
+        <header class="card__meta">
+          <span class="card__index">III</span>
+          <span class="card__status card__status--muted">Underway</span>
+        </header>
+        <div class="card__body">
+          <h3 class="card__title card__title--muted">Untitled</h3>
+          <p class="card__desc card__desc--muted">Drafts on the wall. We'll share when it's ready.</p>
+        </div>
+        <footer class="card__foot card__foot--muted">
+          <span class="card__platform">&mdash;</span>
+          <span class="card__cta">Soon</span>
+        </footer>
+      </article>
+
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="footer__inner">
+      <span class="footer__legal">Gopher Labs LLC &middot; Est. 2026 &middot; Minnesota, USA</span>
+      <a class="footer__email" href="mailto:hello@gopherlabs.co">hello@gopherlabs.co</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const text = "solving problems with technology.";
+      const target = document.getElementById('typingText');
+      const cursor = document.getElementById('cursor');
+      const headline = document.getElementById('headline');
+      const brand = document.getElementById('brand');
+      const cards = document.getElementById('cards');
+      const footer = document.getElementById('footer');
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduce) {
+        target.textContent = text;
+        cursor.style.display = 'none';
+        headline.classList.add('headline--placed');
+        brand.classList.add('brand--visible');
+        cards.classList.add('cards--visible');
+        footer.classList.add('footer--visible');
+        return;
+      }
+
+      let i = 0;
+
+      function typeChar() {
+        if (i < text.length) {
+          const ch = text.charAt(i);
+          target.textContent += ch;
+          i++;
+          let delay = 48 + Math.random() * 26;
+          if (ch === ' ') delay += 10;
+          if (ch === ',') delay += 130;
+          if (ch === '.') delay += 170;
+          setTimeout(typeChar, delay);
+        } else {
+          setTimeout(transitionToBrand, 480);
+        }
+      }
+
+      function transitionToBrand() {
+        cursor.classList.add('headline__cursor--hide');
+        headline.classList.add('headline--placed');
+        brand.classList.add('brand--visible');
+        setTimeout(() => {
+          cards.classList.add('cards--visible');
+          footer.classList.add('footer--visible');
+        }, 720);
+      }
+
+      window.addEventListener('load', () => {
+        setTimeout(typeChar, 420);
+      });
+    })();
+  </script>
+</body>
+</html>

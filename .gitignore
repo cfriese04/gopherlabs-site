@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+._*
+Icon?
+
+# Editor / OS junk
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Local env (none expected — guard against future mistakes)
+.env
+.env.*
+*.log
