@@ -77,22 +77,11 @@ body {
   padding: 0 24px;
   z-index: 20;
   pointer-events: none;
-  transition:
-    top 950ms var(--ease),
-    transform 950ms var(--ease),
-    font-size 950ms var(--ease),
-    letter-spacing 950ms var(--ease),
-    color 950ms ease;
+  transition: opacity 700ms ease;
 }
 
-.headline--placed {
-  top: clamp(236px, 34vh, 348px);
-  transform: translate(-50%, 0);
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  font-style: italic;
-  font-weight: 500;
-  letter-spacing: 0;
-  color: var(--maroon);
+.headline--hidden {
+  opacity: 0;
 }
 
 .headline__text { display: inline; }
@@ -155,6 +144,25 @@ body {
   margin-left: 0.08em;
   /* Gold flourish under the italic word would be too much — color shift is enough */
   color: var(--maroon);
+}
+
+/* Kicker — italic subtitle that lives in normal flow under the brand.
+   Fades in at the same beat that the centered typing element fades out. */
+.hero__kicker {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 500;
+  font-optical-sizing: auto;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  letter-spacing: 0;
+  color: var(--maroon);
+  margin: clamp(16px, 2vh, 24px) 0 0;
+  opacity: 0;
+  transition: opacity 900ms ease 200ms;
+}
+
+.hero__kicker--visible {
+  opacity: 1;
 }
 
 /* ============================================================
@@ -416,11 +424,10 @@ a.card:focus-visible {
     line-height: 1.15;
   }
 
-  .headline--placed {
-    top: clamp(180px, 28dvh, 250px);
+  .hero__kicker {
     font-size: clamp(0.9rem, 3.4vw, 1rem);
+    margin-top: 14px;
     padding: 0 24px;
-    width: 92vw;
   }
 
   .hero {
@@ -492,8 +499,8 @@ a.card:focus-visible {
     font-size: 1.35rem;
   }
 
-  .headline--placed {
-    top: clamp(160px, 24dvh, 220px);
+  .hero__kicker {
+    font-size: 0.95rem;
   }
 }
 
