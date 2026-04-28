@@ -47,8 +47,11 @@ body {
     radial-gradient(at 50%  50%, rgba( 46,   0, 10, 0.02) 0%, transparent 60%);
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh;          /* fallback for older mobile browsers */
+  min-height: 100dvh;         /* dynamic viewport — handles Safari's collapsing toolbar */
   overflow-x: hidden;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 ::selection { background: var(--maroon); color: var(--bg); }
@@ -399,5 +402,107 @@ a.card:focus-visible {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ============================================================
+   Mobile (≤ 600px): tighter spacing, smaller display sizes,
+   stacked footer, less aggressive letter-spacing.
+   ============================================================ */
+@media (max-width: 600px) {
+  .headline {
+    font-size: clamp(1.5rem, 7vw, 2.4rem);
+    width: 94vw;
+    padding: 0 16px;
+    line-height: 1.15;
+  }
+
+  .headline--placed {
+    top: clamp(180px, 28dvh, 250px);
+    font-size: clamp(0.9rem, 3.4vw, 1rem);
+    padding: 0 24px;
+    width: 92vw;
+  }
+
+  .hero {
+    padding: clamp(72px, 14dvh, 130px) 20px clamp(56px, 10dvh, 100px);
+  }
+
+  .brand {
+    font-size: clamp(2.5rem, 14vw, 4.25rem);
+    line-height: 1;
+    letter-spacing: -0.028em;
+  }
+
+  .brand__word--italic {
+    margin-left: 0.06em;
+  }
+
+  .content {
+    padding: 0 16px clamp(48px, 8dvh, 80px);
+  }
+
+  .cards { gap: 12px; }
+
+  .card {
+    padding: 22px 22px 18px;
+    min-height: 260px;
+  }
+
+  .card__body { padding-top: 36px; }
+
+  .card__title {
+    font-size: 1.65rem;
+    margin-bottom: 12px;
+  }
+
+  .card__desc {
+    font-size: 0.95rem;
+    line-height: 1.45;
+    margin-bottom: 18px;
+    max-width: none;
+  }
+
+  .card__meta,
+  .card__foot {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+
+  .footer {
+    padding: 20px 16px max(20px, env(safe-area-inset-bottom));
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+  }
+
+  .footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* iPhone SE / very narrow (≤ 360px): give the brand more breathing room */
+@media (max-width: 360px) {
+  .brand {
+    font-size: 2.25rem;
+    letter-spacing: -0.025em;
+  }
+
+  .headline {
+    font-size: 1.35rem;
+  }
+
+  .headline--placed {
+    top: clamp(160px, 24dvh, 220px);
+  }
+}
+
+/* Disable hover-based lift on touch devices — feels janky */
+@media (hover: none) {
+  .card--featured:hover {
+    transform: none;
+    box-shadow: 0 1px 0 0 rgba(46, 0, 10, 0.06), 0 12px 32px -16px rgba(46, 0, 10, 0.28);
+  }
+  .card--placeholder:hover { border-color: var(--line); }
 }
 
