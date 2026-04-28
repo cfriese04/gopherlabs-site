@@ -17,6 +17,15 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="style.css" />
+  <noscript>
+    <style>
+      .headline { display: none; }
+      .brand,
+      .prose,
+      .feature,
+      .footer { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
 </head>
 <body>
   <h2 class="headline" id="headline" aria-label="solving problems with technology">
@@ -104,6 +113,15 @@
       const cursor = document.getElementById('cursor');
       const headline = document.getElementById('headline');
       const brand = document.getElementById('brand');
+      const footer = document.getElementById('footer');
+      const proseSections = document.querySelectorAll('.prose');
+      const featureSections = document.querySelectorAll('.feature');
+
+      function revealAllContent() {
+        proseSections.forEach(el => el.classList.add('prose--visible'));
+        featureSections.forEach(el => el.classList.add('feature--visible'));
+        footer.classList.add('footer--visible');
+      }
 
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -112,6 +130,7 @@
         cursor.style.display = 'none';
         headline.classList.add('headline--placed');
         brand.classList.add('brand--visible');
+        revealAllContent();
         return;
       }
 
@@ -136,6 +155,9 @@
         cursor.classList.add('headline__cursor--hide');
         headline.classList.add('headline--placed');
         brand.classList.add('brand--visible');
+        // Reveal the rest of the page once the headline has begun morphing
+        // and the brand starts appearing. ~720ms feels like the right beat.
+        setTimeout(revealAllContent, 720);
       }
 
       window.addEventListener('load', () => {
